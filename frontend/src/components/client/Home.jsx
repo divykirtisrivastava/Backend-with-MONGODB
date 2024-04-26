@@ -16,7 +16,7 @@ export default function Home() {
   let [inp, setInp] = useState('')
 
   async function loadData() {
-    let response = await axios.get('http://localhost:4000/getdata')
+    let response = await axios.get('http://localhost:4000/api/getProduct')
     setUser(response.data)
   
   }

@@ -9,7 +9,7 @@ export default function Table() {
         loadData()
     },[])
     async function loadData() {
-        let response = await axios.get('http://localhost:4000/getdata')
+        let response = await axios.get('http://localhost:4000/api/getProduct')
 
         setUser(response.data)
        
@@ -19,7 +19,7 @@ export default function Table() {
     async function Deletedata(id){
         let result = confirm("Are U sure to Delete")
         if(result == true){
-            await axios.delete(`http://localhost:4000/Deletedata/${id}`)
+            await axios.delete(`http://localhost:4000/api/deleteProduct/${id}`)
             loadData()
         }
     }

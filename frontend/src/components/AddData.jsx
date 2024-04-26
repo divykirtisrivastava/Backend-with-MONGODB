@@ -22,7 +22,7 @@ export default function AddUser() {
       user.append('productPrice', productPrice);
 
       try {
-          await axios.post('http://localhost:4000/submit', user, {
+          await axios.post('http://localhost:4000/api/saveProduct', user, {
               headers: {
                   'Content-Type': 'multipart/form-data'
               }
