@@ -15,7 +15,7 @@ export default function AddCard() {
 
   let { setList } = useContext(UserContext)
   async function getCart() {
-    let result = await axios.get('http://localhost:4000/getCartData')
+    let result = await axios.get('http://localhost:4000/api/getCart')
     setCart(result.data)
     setList(result.data.length)
   }
@@ -23,7 +23,7 @@ export default function AddCard() {
   async function deleteCart(id) {
     let result = confirm("Are U sure to Delete")
     if (result == true) {
-      await axios.delete(`http://localhost:4000/DeleteCartdata/${id}`)
+      await axios.delete(`http://localhost:4000/api/deleteCart/${id}`)
       getCart()
     }
   }

@@ -16,29 +16,29 @@ export default function Home() {
   let [inp, setInp] = useState('')
 
   async function loadData() {
-    let response = await axios.get('http://localhost:4000/getdata')
+    let response = await axios.get('http://localhost:4000/api/getProduct')
     setUser(response.data)
   
   }
   async function twoHundred() {
-    let response = await axios.get('http://localhost:4000/getdata')
+    let response = await axios.get('http://localhost:4000/api/getProduct')
     let result = response.data.filter((item)=> (item.productPrice >= 1000 && item.productPrice <= 2000))
    
   }
 
   async function filterData() {
-    let response = await axios.get(`http://localhost:4000/getdata/${inp}`)
+    let response = await axios.get(`http://localhost:4000/api/getProductByName/${inp}`)
     setUser(response.data)
   }
 
   let {setList} = useContext(UserContext)
   async function getCart(){
-    let result = await axios.get('http://localhost:4000/getCartData')
+    let result = await axios.get('http://localhost:4000/api/getCart')
     setList(result.data.length)
   }
 
   async function handleCart(data){
-    await axios.post('http://localhost:4000/cartSubmit',{
+    await axios.post('http://localhost:4000/api/saveCart',{
       productBrand:data.productBrand,
       productPrice: data.productPrice,
       productRating: data.productRating,
@@ -58,18 +58,18 @@ export default function Home() {
           <nav className="-mx-3 space-y-6 ">
             <div className="space-y-3 ">
               <label className="px-3 text-xs font-semibold uppercase text-white">Search</label>
-              <form class="max-w-md mx-auto">
-                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                <div class="relative">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              <form className="max-w-md mx-auto">
+                <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                   </div>
                   <input type="search"
                     value={inp}
                     onChange={(e) => setInp(e.target.value)}
-                    id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search ..." required />
+                    id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search ..." required />
 
                 </div>
               </form>
@@ -136,9 +136,9 @@ export default function Home() {
       </aside>
 
       <div id='main'>
-        {user.map((data) => (
+        {user.map((data, key) => (
 
-          <div className="w-[300px] rounded-md border">
+          <div className="w-[300px] rounded-md border" key={key}>
             <img
               src={`http://localhost:4000/${data.image}`}
               alt="Laptop"

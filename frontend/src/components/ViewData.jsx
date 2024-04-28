@@ -9,7 +9,7 @@ export default function ViewData() {
         loadData()
     },[])
     async function loadData() {
-        let response = await axios.get(`http://localhost:4000/viewdata/${id}`)
+        let response = await axios.get(`http://localhost:4000/api/viewProduct/${id}`)
 
         setUser(response.data)
       

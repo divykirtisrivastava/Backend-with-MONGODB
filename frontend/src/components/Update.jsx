@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 
 export default function AddUser() {
     let navigation = useNavigate()
+    let {id} = useParams()
     let [productBrand, setProductBrand] = useState('');
     let [productType, setProductType] = useState('');
     let [image, setImage] = useState(null);
     let [productRating, setProductRating] = useState('');
     let [productPrice, setProductPrice] = useState('');
+
+    useEffect(()=>{
+      loadData()
+    },[])
+
+    async function loadData() {
+      let response = await axios.get(`http://localhost:4000/api/viewProduct/${id}`)
+  console.log(response.data)
+      setProductBrand(response.data[0].productBrand)
+      setProductType(response.data[0].productType)
+      setProductPrice(response.data[0].productPrice)
+      setProductRating(response.data[0].productRating)
+  }
 
     const onSubmit = async (e) => {
       e.preventDefault();
@@ -22,7 +36,7 @@ export default function AddUser() {
       user.append('productPrice', productPrice);
 
       try {
-          await axios.post('http://localhost:4000/submit', user, {
+          await axios.put(`http://localhost:4000/api/updateProduct/${id}`, user, {
               headers: {
                   'Content-Type': 'multipart/form-data'
               }
@@ -33,11 +47,8 @@ export default function AddUser() {
       } catch (error) {
           alert('Failed to upload product.');
       }
-
-      async function getCartData(){
-        
-      }
   };
+ 
   return (
     <section>
       <div className="grid grid-cols-1 lg:grid-cols-2">

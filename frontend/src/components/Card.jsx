@@ -8,7 +8,7 @@ export  default function Card() {
     let [user,setUser] = useState([])
 
     async function loadData(){
-        let response = await  axios.get('http://localhost:4000/getdata')
+        let response = await  axios.get('http://localhost:4000/api/getProduct')
 
         setUser(response.data)
         // console.log(response.data)
