@@ -36,7 +36,11 @@ export default function AddUser() {
       user.append('productPrice', productPrice);
 
       try {
+<<<<<<< HEAD
           await axios.put(`http://localhost:4000/api/updateProduct/${id}`, user, {
+=======
+          await axios.post('http://localhost:4000/api/updateProduct', user, {
+>>>>>>> 15b8a6e014285f70bfc807b7fe8c53dcbe073c0a
               headers: {
                   'Content-Type': 'multipart/form-data'
               }
