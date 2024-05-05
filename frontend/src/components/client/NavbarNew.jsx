@@ -7,12 +7,12 @@ import UserContext from '../../context/UserContext'
 
 const menuItems = [
   {
-    name: 'Home',
-    to: '',
+    name: 'Sign In',
+    to: '/usersignin',
   },
   {
-    name: 'About',
-    to: '#',
+    name: 'Sign Up',
+    to: '/usersignup',
   },
   // {
   //   name: 'addcart',
@@ -60,7 +60,7 @@ export default function NavbarNew() {
               <li key={item.name}>
                 <Link
                   to={item.to}
-                  className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  className="text-sm font-semibold p-2 rounded text-gray-800 hover:text-white hover:bg-gray-400 m-4 "
                 >
                   {item.name}
                 </Link>
@@ -68,14 +68,15 @@ export default function NavbarNew() {
             ))}
           </ul>
         </div>
-        {/* <div className="hidden lg:block"> */}
+        <div className="hidden lg:block">
+
         <Link to='/addcart'
 
           type="button"
           className=" hidden relative lg:block border-2 border-black text-xl rounded-md bg-white px-3 py-2 text-sm text-black ">
           Cart <span className={`${list ? 'absolute rounded w-[20px] h-[20px] top-[-5px] right-[-5px] bg-red-400 flex justify-center items-center' : 'none'}`}>{list ? list : ''}</span>
         </Link>
-        {/* </div> */}
+        </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
         </div>

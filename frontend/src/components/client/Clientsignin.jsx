@@ -2,34 +2,43 @@ import React, { useContext, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import UserContext from '../context/UserContext'
+import UserContext from '../../context/UserContext'
 
-export default function Signin() {
+
+export default function Clientsignin() {
 
 
   let [user, setUser] = useState({
-    email:"",
+    username:"",
     password:""
 })
 
 let navigation = useNavigate()
 
-const {email, password} = user
+const {username, password} = user
 
 function onHandleChange(e){
     setUser({...user,[e.target.name]:e.target.value})
 }
-let {setPass} = useContext(UserContext)
+let {setRelease} = useContext(UserContext)
 async function signin(){
-  let result=  await axios.post('http://localhost:4000/api/adminLogin', user)
+  let result=  await axios.post('http://localhost:4000/api/clientlogin', user)
     if(result.data == true){
-      setPass(true)
-      navigation('/admin')
+        createUserCart(user.username)
+    setRelease(user.username)
+        navigation('/')
     }
     else{
       alert('you enter the wrong details')
     }
 }
+
+async function createUserCart(username){
+    let result = await axios.get(`http://localhost:4000/api/createUserCart/${username}`)
+   if(result.data == true){
+    setRelease(username)
+   }
+  }
   return (
     <section>
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -51,15 +60,15 @@ async function signin(){
                 <div>
                   <label htmlFor="" className="text-base font-medium text-gray-900">
                     {' '}
-                    Email address{' '}
+                   User Name{' '}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="email"
-                      placeholder="Email"
-                      name='email'
-                      value={email}
+                      placeholder="username"
+                      name='username'
+                      value={username}
                       onChange={(e)=>onHandleChange(e)}
                     ></input>
                   </div>

@@ -1,54 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import axios from 'axios'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
-export default function AddUser() {
+export default function ClientSignup() {
     let navigation = useNavigate()
-    let {id} = useParams()
-    let [productBrand, setProductBrand] = useState('');
-    let [productType, setProductType] = useState('');
+    let [username, setUserName] = useState('');
+    let [email, setEmail] = useState('');
     let [image, setImage] = useState(null);
-    let [productRating, setProductRating] = useState('');
-    let [productPrice, setProductPrice] = useState('');
-
-    useEffect(()=>{
-      loadData()
-    },[])
-
-    async function loadData() {
-      let response = await axios.get(`http://localhost:4000/api/viewProduct/${id}`)
-  console.log(response.data)
-      setProductBrand(response.data[0].productBrand)
-      setProductType(response.data[0].productType)
-      setProductPrice(response.data[0].productPrice)
-      setProductRating(response.data[0].productRating)
-  }
+    let [password, setPassword] = useState('');
 
     const onSubmit = async (e) => {
       e.preventDefault();
       const user = new FormData();
       user.append('image', image);
-      user.append('productBrand', productBrand);
-      user.append('productType', productType);
-      user.append('productRating', productRating);
-      user.append('productPrice', productPrice);
+      user.append('username', username);
+      user.append('email', email);
+      user.append('password', password);
 
       try {
-          await axios.put(`http://localhost:4000/api/updateProduct/${id}`, user, {
+          await axios.post('http://localhost:4000/api/saveClient', user, {
               headers: {
                   'Content-Type': 'multipart/form-data'
               }
           });
          
-          navigation("/admin")
-         
+      navigation("/usersignin")
+
       } catch (error) {
           alert('Failed to upload product.');
       }
   };
- 
   return (
     <section>
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -61,17 +44,17 @@ export default function AddUser() {
                 <div>
                   <label htmlFor="name" className="text-base font-medium text-gray-900">
                     {' '}
-                   Product Brand{' '}
+                   User Name{' '}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
-                      name='productBrand'
-                      placeholder="productBrand"
+                      name='username'
+                      placeholder="username"
                       id="name"
-                      value={productBrand}
-                      onChange={(e)=>setProductBrand(e.target.value)}
+                      value={username}
+                      onChange={(e)=>setUserName(e.target.value)}
 
                     ></input>
                   </div>
@@ -79,17 +62,17 @@ export default function AddUser() {
                 <div>
                   <label htmlFor="name" className="text-base font-medium text-gray-900">
                     {' '}
-                   Product type{' '}
+                   Email{' '}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
-                      name='productBrand'
-                      placeholder="productBrand"
+                      name='email'
+                      placeholder="email"
                       id="name"
-                      value={productType}
-                      onChange={(e)=>setProductType(e.target.value)}
+                      value={email}
+                      onChange={(e)=>setEmail(e.target.value)}
 
                     ></input>
                   </div>
@@ -97,41 +80,22 @@ export default function AddUser() {
                 <div>
                   <label htmlFor="name" className="text-base font-medium text-gray-900">
                     {' '}
-                   Product price{' '}
+                  Password{' '}
                   </label>
                   <div className="mt-2">
                     <input
                       className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                       type="text"
-                      name='productBrand'
-                      placeholder="productBrand"
+                      name='password'
+                      placeholder="password"
                       id="name"
-                      value={productPrice}
-                      onChange={(e)=>setProductPrice(e.target.value)}
+                      value={password}
+                      onChange={(e)=>setPassword(e.target.value)}
 
                     ></input>
                   </div>
                 </div>
-                <div>
-                  <label htmlFor="name" className="text-base font-medium text-gray-900">
-                    {' '}
-                   Product rating{' '}
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-                      type="text"
-                      name='productBrand'
-                      placeholder="productBrand"
-                      id="name"
-                      value={productRating}
-                      onChange={(e)=>setProductRating(e.target.value)}
-
-                    ></input>
-                  </div>
-                </div>
-               
-              
+                
                 <div>
                   <div className="flex items-center justify-between">
                     <label htmlFor="password" className="text-base font-medium text-gray-900">

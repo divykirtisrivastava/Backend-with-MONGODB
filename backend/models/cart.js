@@ -10,4 +10,4 @@ let AddCardSchema = new mongoose.Schema({
 })
 
 
-module.exports= mongoose.model('AddCard', AddCardSchema)
+module.exports= mongoose.model('cartDatas', AddCardSchema)

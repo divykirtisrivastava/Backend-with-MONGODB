@@ -5,7 +5,7 @@ import UserContext from '../context/UserContext'
 export default function Protected({children}) {
 let {pass} = useContext(UserContext)
 
- if(true){
+ if(pass){
     return children
  }else{
     return <Navigate to='/admin/signin'/>

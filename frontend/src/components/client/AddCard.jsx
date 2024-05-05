@@ -8,22 +8,25 @@ import {Link} from 'react-router-dom'
 
 export default function AddCard() {
   let [cart, setCart] = useState([])
+  let { setList } = useContext(UserContext)
+  let {release} = useContext(UserContext)
 
   useEffect(() => {
     getCart()
-  }, [])
+  }, [cart])
 
-  let { setList } = useContext(UserContext)
   async function getCart() {
-    let result = await axios.get('http://localhost:4000/api/getCart')
-    setCart(result.data)
-    setList(result.data.length)
-  }
+    if(release){
+      let response = await axios.get(`http://localhost:4000/api/getCart/${release}`)
+    setCart(response.data) 
+    setList(response.data.length)
+    }
+  } 
 
   async function deleteCart(id) {
     let result = confirm("Are U sure to Delete")
     if (result == true) {
-      await axios.delete(`http://localhost:4000/api/deleteCart/${id}`)
+      await axios.delete(`http://localhost:4000/api/deleteCart/${id}/${release}`)
       getCart()
     }
   }

@@ -14,11 +14,13 @@ exports.adminLogin =  async (req, res) => {
     }
 }
 
-exports.saveAdmin = async (req, res) => {
-    let adminBody = req.body
-    let finalPass = new adminModel(adminBody)
+exports.saveAdmin =  (req, res) => {
+    let finalPass = new adminModel({    
+        email: req.body.email,
+        password:req.body.password
+    })
+    console.log(finalPass)
     finalPass.save()
         .then(() => res.send("data submited"))
         .catch(err => console.log(err))
-
 }
