@@ -26,6 +26,11 @@ exports.clientLogin = async (req, res)=>{
         res.send(false)
     }
 }
+exports.getClient = async (req, res)=>{
+    let username = req.params.username
+    let data = await clientModel.find({ username: username })
+   res.json(data)
+}
 
 exports.createUserCart = (req, res)=>{
     let username= req.params.username
